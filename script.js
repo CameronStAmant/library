@@ -29,12 +29,20 @@ myLibrary.push(mistborn);
 
 let bookshelf = document.querySelector('#bookshelf');
 let modal = document.getElementById('modal');
-// let closeBtn = document.getElementById('closeBtn');
+let closeBtn = document.getElementById('closeBtn');
+
+closeBtn.addEventListener('click', () => {
+  modal.style.display = 'none';
+  title.value = '';
+  author.value = '';
+  pages.value = '';
+  read.checked = false;
+})
 
 const btn = document.querySelector('#btn');
 btn.addEventListener('click', () => {
   modal.style.display = 'block';
-  // closeBtn.style.display = 'block';
+  closeBtn.style.display = 'block';
 });
 
 const addToShelf = document.getElementById('addToShelf');
