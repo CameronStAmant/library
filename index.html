@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Library</title>
+    <meta charset='UTF-8'>
+    <link href='style.css' rel='stylesheet'>
+  </head>
+  <body>
+    <button id='btn'>+Book</button><br><br>
+    <button id='closeBtn'>Close</button>
+    <div id='modal' class='modal'>
+      <form>
+        <label for='title'>Title:</label>
+        <input type='text' id='title' name='title' value=''><br>
+        <label for='author'>Author:</label>
+        <input type='text' id='author' name='author'><br>
+        <label for='pages'>Page Count:</label>
+        <input type='text' id='pages' name='pages'><br>
+        <label for='read'>Read?</label>
+        <input type='checkbox' id='read' name='read'><br>
+        <input type='button' id='addToShelf' value='Add to Shelf'>
+      </form>
+    </div>
+    <p>On your shelf</p>
+    <div id='bookshelf'></div>
+    <script src='script.js'></script>
+  </body>
+</html>
