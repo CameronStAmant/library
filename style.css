@@ -5,3 +5,12 @@
 #closeBtn {
   display: none;
 }
+
+.left-btn {
+  /* float: left; */
+  display: inline-block;
+}
+
+.delete-btn {
+  display: inline;
+}

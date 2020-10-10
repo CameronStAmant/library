@@ -6,7 +6,7 @@ function Book(title, author, pages, read) {
   this.pages = pages
   this.read = read
   this.info = function() {
-    return `${title} by ${author}, ${pages} pages, ${read}`;
+    return `<div>${title} by ${author}, ${pages} pages, ${read}</div>`;
   }
 }
 
@@ -15,7 +15,19 @@ function addBookToLibrary() {
     let displayBook = document.createElement('div');
     displayBook.innerHTML = myLibrary[i].info();
     displayBook.id = myLibrary[i].title;
+    displayBook.className = 'left-btn';
+    let deleteBtn = document.createElement('BUTTON');
+    deleteBtn.id = i;
+    deleteBtn.className = 'delete-btn';
+    deleteBtn.innerHTML = 'Remove';
+    let lineBreak = document.createElement('BR');
+    // let bookRead = document.createElement('BUTTON');
+    // bookRead.innerHTML = 'Mark read';
+    // bookRead.id = 'readUnread' + i;
+    bookshelf.appendChild(deleteBtn);
+    // bookshelf.appendChild(bookRead);
     bookshelf.appendChild(displayBook);
+    bookshelf.appendChild(lineBreak);
   }
 }
 
@@ -61,6 +73,44 @@ addToShelf.addEventListener('click', () => {
   author.value = '';
   pages.value = '';
   read.checked = false;
+  deletes();
+  // readUn();
 });
 
+
+
 addBookToLibrary();
+let buttonArray = [];
+
+function deletes() {
+  for (let a = 0; a < myLibrary.length; a++) {
+    buttonArray[a] = document.getElementById(a);
+    buttonArray[a].addEventListener('click', () => {
+      myLibrary.splice(a,1);
+      bookshelf.innerHTML = '';
+      addBookToLibrary();
+      deletes();
+      // readUn();
+    });
+  };
+}
+
+deletes();
+
+// Book.prototype.readUnread = function() {
+//   this.read = 'no';
+// }
+
+// let readArray = [];
+
+// function readUn() {
+//   for (let b = 0; b < myLibrary.length; b++) {
+//     readArray[b] = document.getElementById('readUnread' + b);
+//     readArray[b].addEventListener('click', () => {
+//       // readUnread();
+//       alert('h');
+//       // addBookToLibrary();
+//       // deletes();
+//     });
+//   };
+// }
