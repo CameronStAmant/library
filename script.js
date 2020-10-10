@@ -6,7 +6,7 @@ function Book(title, author, pages, read) {
   this.pages = pages
   this.read = read
   this.info = function() {
-    return `<div>${title} by ${author}, ${pages} pages, ${read}</div>`;
+    return `<div>${title} by ${author}, ${pages} pages, read: ${read}</div>`;
   }
 }
 
@@ -21,19 +21,19 @@ function addBookToLibrary() {
     deleteBtn.className = 'delete-btn';
     deleteBtn.innerHTML = 'Remove';
     let lineBreak = document.createElement('BR');
-    // let bookRead = document.createElement('BUTTON');
-    // bookRead.innerHTML = 'Mark read';
-    // bookRead.id = 'readUnread' + i;
+    let bookRead = document.createElement('BUTTON');
+    bookRead.innerHTML = 'Mark read';
+    bookRead.id = 'readUnread' + i;
     bookshelf.appendChild(deleteBtn);
-    // bookshelf.appendChild(bookRead);
+    bookshelf.appendChild(bookRead);
     bookshelf.appendChild(displayBook);
     bookshelf.appendChild(lineBreak);
   }
 }
 
-let theHobbit = new Book('The Hobbit', 'J.R.R Tolkien', 295, 'read');
-let theLordOfTheRings = new Book('The Lord of the Rings', 'J.R.R Tolkien', 1000, 'read');
-let mistborn = new Book('Mistborn', 'Sanderson', 400, 'unread');
+let theHobbit = new Book('The Hobbit', 'J.R.R Tolkien', 295, 'true');
+let theLordOfTheRings = new Book('The Lord of the Rings', 'J.R.R Tolkien', 1000, 'false');
+let mistborn = new Book('Mistborn', 'Sanderson', 400, 'false');
 
 myLibrary.push(theHobbit);
 myLibrary.push(theLordOfTheRings);
@@ -74,7 +74,7 @@ addToShelf.addEventListener('click', () => {
   pages.value = '';
   read.checked = false;
   deletes();
-  // readUn();
+  readUn();
 });
 
 
@@ -90,27 +90,34 @@ function deletes() {
       bookshelf.innerHTML = '';
       addBookToLibrary();
       deletes();
-      // readUn();
+      readUn();
     });
   };
 }
 
 deletes();
 
-// Book.prototype.readUnread = function() {
-//   this.read = 'no';
-// }
+Book.prototype.readUnread = function() {
+  this.read = 'true';
+  this.info = function() {
+    return `<div>${this.title} by ${this.author}, ${this.pages} pages, read: ${this.read}</div>`;
+  }
 
-// let readArray = [];
+}
 
-// function readUn() {
-//   for (let b = 0; b < myLibrary.length; b++) {
-//     readArray[b] = document.getElementById('readUnread' + b);
-//     readArray[b].addEventListener('click', () => {
-//       // readUnread();
-//       alert('h');
-//       // addBookToLibrary();
-//       // deletes();
-//     });
-//   };
-// }
+let readArray = [];
+
+function readUn() {
+  for (let b = 0; b < myLibrary.length; b++) {
+    readArray[b] = document.getElementById('readUnread' + b);
+    readArray[b].addEventListener('click', () => {
+      myLibrary[b].readUnread();
+      bookshelf.innerHTML = '';
+      addBookToLibrary();
+      deletes();
+      readUn();
+    });
+  };
+}
+
+readUn();
