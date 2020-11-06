@@ -14,3 +14,7 @@
 .delete-btn {
   display: inline;
 }
+
+input:invalid:required {
+  border: 2px solid red;
+}

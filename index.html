@@ -10,11 +10,14 @@
     <div id='modal' class='modal'>
       <form>
         <label for='title'>Title:</label>
-        <input type='text' id='title' name='title' value=''><br>
+        <input type='text' id='title' name='title' value='' required>
+        <small id='titleError' class='errors'></small><br>
         <label for='author'>Author:</label>
-        <input type='text' id='author' name='author'><br>
+        <input type='text' id='author' name='author' required>
+        <small id='authorError' class='errors'></small><br>
         <label for='pages'>Page Count:</label>
-        <input type='text' id='pages' name='pages'><br>
+        <input type='text' id='pages' name='pages' required>
+        <small id='pagesError' class='errors'></small><br>
         <label for='read'>Read?</label>
         <input type='checkbox' id='read' name='read'><br>
         <input type='button' id='addToShelf' value='Add to Shelf'>

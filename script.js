@@ -1,7 +1,7 @@
 let myLibrary = [];
 
 class Book {
-  constructor (title, author, pages, read) {
+  constructor(title, author, pages, read) {
     this.title = title;
     this.author = author;
     this.pages = pages;
@@ -34,7 +34,12 @@ function addBookToLibrary() {
 }
 
 let theHobbit = new Book('The Hobbit', 'J.R.R Tolkien', 295, 'true');
-let theLordOfTheRings = new Book('The Lord of the Rings', 'J.R.R Tolkien', 1000, 'false');
+let theLordOfTheRings = new Book(
+  'The Lord of the Rings',
+  'J.R.R Tolkien',
+  1000,
+  'false'
+);
 let mistborn = new Book('Mistborn', 'Sanderson', 400, 'false');
 
 myLibrary.push(theHobbit);
@@ -51,7 +56,7 @@ closeBtn.addEventListener('click', () => {
   author.value = '';
   pages.value = '';
   read.checked = false;
-})
+});
 
 const btn = document.querySelector('#btn');
 btn.addEventListener('click', () => {
@@ -66,6 +71,32 @@ addToShelf.addEventListener('click', () => {
   let author = document.getElementById('author');
   let pages = document.getElementById('pages');
   let read = document.getElementById('read');
+  if (
+    !title.checkValidity() ||
+    !author.checkValidity() ||
+    !pages.checkValidity()
+  ) {
+    const titleError = document.getElementById('titleError');
+    const authorError = document.getElementById('authorError');
+    const pagesError = document.getElementById('pagesError');
+
+    if (!title.checkValidity()) {
+      titleError.innerHTML = 'Please add a title.';
+    } else {
+      titleError.innerHTML = '';
+    }
+    if (!author.checkValidity()) {
+      authorError.innerHTML = 'Please add an author.';
+    } else {
+      authorError.innerHTML = '';
+    }
+    if (!pages.checkValidity()) {
+      pagesError.innerHTML = 'Please add the number of pages.';
+    } else {
+      pagesError.innerHTML = '';
+    }
+    return;
+  }
   let newBook = new Book(title.value, author.value, pages.value, read.checked);
   myLibrary.push(newBook);
   bookshelf.innerHTML = '';
@@ -79,8 +110,6 @@ addToShelf.addEventListener('click', () => {
   readUn();
 });
 
-
-
 addBookToLibrary();
 let buttonArray = [];
 
@@ -88,24 +117,23 @@ function deletes() {
   for (let a = 0; a < myLibrary.length; a++) {
     buttonArray[a] = document.getElementById(a);
     buttonArray[a].addEventListener('click', () => {
-      myLibrary.splice(a,1);
+      myLibrary.splice(a, 1);
       bookshelf.innerHTML = '';
       addBookToLibrary();
       deletes();
       readUn();
     });
-  };
+  }
 }
 
 deletes();
 
-Book.prototype.readUnread = function() {
+Book.prototype.readUnread = function () {
   this.read = 'true';
-  this.info = function() {
+  this.info = function () {
     return `<div>${this.title} by ${this.author}, ${this.pages} pages, read: ${this.read}</div>`;
-  }
-
-}
+  };
+};
 
 let readArray = [];
 
@@ -119,7 +147,7 @@ function readUn() {
       deletes();
       readUn();
     });
-  };
+  }
 }
 
 readUn();
