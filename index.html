@@ -2,30 +2,46 @@
 <html>
   <head>
     <title>Library</title>
-    <meta charset='UTF-8'>
-    <link href='style.css' rel='stylesheet'>
+    <meta charset="UTF-8" />
+    <link href="style.css" rel="stylesheet" />
   </head>
   <body>
-    <button id='btn'>+Book</button><br><br>
-    <div id='modal' class='modal'>
+    <button id="btn">+Book</button><br /><br />
+    <div id="modal" class="modal">
       <form>
-        <label for='title'>Title:</label>
-        <input type='text' id='title' name='title' value='' required>
-        <small id='titleError' class='errors'></small><br>
-        <label for='author'>Author:</label>
-        <input type='text' id='author' name='author' required>
-        <small id='authorError' class='errors'></small><br>
-        <label for='pages'>Page Count:</label>
-        <input type='text' id='pages' name='pages' required>
-        <small id='pagesError' class='errors'></small><br>
-        <label for='read'>Read?</label>
-        <input type='checkbox' id='read' name='read'><br>
-        <input type='button' id='addToShelf' value='Add to Shelf'>
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" value="" required />
+        <small id="titleError" class="errors"></small><br />
+        <label for="author">Author:</label>
+        <input type="text" id="author" name="author" required />
+        <small id="authorError" class="errors"></small><br />
+        <label for="pages">Page Count:</label>
+        <input type="text" id="pages" name="pages" required />
+        <small id="pagesError" class="errors"></small><br />
+        <label for="read">Read?</label>
+        <input type="checkbox" id="read" name="read" /><br />
+        <input type="button" id="addToShelf" value="Add to Shelf" />
       </form>
-      <button id='closeBtn'>Cancel</button>
+      <button id="closeBtn">Cancel</button>
     </div>
     <p>On your shelf</p>
-    <div id='bookshelf'></div>
-    <script src='script.js'></script>
+    <div id="bookshelf"></div>
+    <script src="script.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-analytics.js"></script>
+    <script
+      let firebaseConfig = {    
+        apiKey: "AIzaSyDiJKo0AmqYHd9w0Q3E0eFujTnYhB13aPE",
+        authDomain: "library-94410.firebaseapp.com",
+        projectId: "library-94410",
+        storageBucket: "library-94410.appspot.com",
+        messagingSenderId: "434861406221",
+        appId: "1:434861406221:web:114db85023d8220fa27d44",
+        measurementId: "G-3E9E1YHVFZ"
+      };
+
+      firebase.initializeApp(firebaseConfig);
+    ></script>
   </body>
 </html>
