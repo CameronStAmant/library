@@ -121,9 +121,7 @@ addToShelf.addEventListener('click', () => {
     }
     return;
   }
-  // let newBook = new Book(title.value, author.value, pages.value, read.checked);
-  // myLibrary.push(newBook);
-  // console.log(`${second.length + 1}`);
+
   firebase.database().ref().child('bookshelf').child(`Book${nextID}`).update({
     author: author.value,
     id: nextID,
