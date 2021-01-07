@@ -38,6 +38,7 @@ const preObject = document.getElementById('bookshelf');
 const dbRefObject = firebase.database().ref().child('bookshelf');
 let dbArray = [];
 let second = {};
+let nextID = 1;
 const getBooks = () => {
   firebase
     .database()
@@ -58,6 +59,9 @@ const getBooks = () => {
         );
         myLibrary.push(newBooks);
       });
+      if (nextID === 1) {
+        nextID = second.length + 1;
+      }
       bookshelf.innerHTML = '';
       addBookToLibrary();
       deletes();
@@ -117,8 +121,17 @@ addToShelf.addEventListener('click', () => {
     }
     return;
   }
-  let newBook = new Book(title.value, author.value, pages.value, read.checked);
-  myLibrary.push(newBook);
+  // let newBook = new Book(title.value, author.value, pages.value, read.checked);
+  // myLibrary.push(newBook);
+  // console.log(`${second.length + 1}`);
+  firebase.database().ref().child('bookshelf').child(`Book${nextID}`).update({
+    author: author.value,
+    id: nextID,
+    pageCount: pages.value,
+    read: read.checked,
+    title: title.value,
+  });
+  nextID += 1;
   bookshelf.innerHTML = '';
   addBookToLibrary();
   modal.style.display = 'none';
