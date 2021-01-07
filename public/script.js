@@ -35,7 +35,6 @@ function addBookToLibrary() {
 }
 
 const preObject = document.getElementById('bookshelf');
-const dbRefObject = firebase.database().ref().child('bookshelf');
 let dbArray = [];
 let second = {};
 let nextID = 1;
@@ -47,25 +46,27 @@ const getBooks = () => {
     .on('value', (book) => {
       dbArray = [];
       myLibrary = [];
-      dbArray.push(book.val());
-      second = Object.values(dbArray[0]);
-      second.forEach((element) => {
-        let newBooks = new Book(
-          element.title,
-          element.author,
-          element.pageCount,
-          element.read,
-          element.id
-        );
-        myLibrary.push(newBooks);
-      });
-      if (nextID === 1) {
-        nextID = second.length + 1;
+      if (book.val() !== null) {
+        dbArray.push(book.val());
+        second = Object.values(dbArray[0]);
+        second.forEach((element) => {
+          let newBooks = new Book(
+            element.title,
+            element.author,
+            element.pageCount,
+            element.read,
+            element.id
+          );
+          myLibrary.push(newBooks);
+        });
+        if (nextID === 1) {
+          nextID = second.length + 1;
+        }
+        bookshelf.innerHTML = '';
+        addBookToLibrary();
+        deletes();
+        readUn();
       }
-      bookshelf.innerHTML = '';
-      addBookToLibrary();
-      deletes();
-      readUn();
     });
 };
 getBooks();
