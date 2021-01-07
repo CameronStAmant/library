@@ -1,11 +1,12 @@
 let myLibrary = [];
 
 class Book {
-  constructor(title, author, pages, read) {
+  constructor(title, author, pages, read, id) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
+    this.id = id;
   }
   info() {
     return `<div>${this.title} by ${this.author}, ${this.pages} pages, read: ${this.read}</div>`;
@@ -24,7 +25,7 @@ function addBookToLibrary() {
     deleteBtn.innerHTML = 'Remove';
     let lineBreak = document.createElement('BR');
     let bookRead = document.createElement('BUTTON');
-    bookRead.innerHTML = 'Mark read';
+    bookRead.innerHTML = 'Mark read/unread';
     bookRead.id = 'readUnread' + i;
     bookshelf.appendChild(deleteBtn);
     bookshelf.appendChild(bookRead);
@@ -33,18 +34,38 @@ function addBookToLibrary() {
   }
 }
 
-let theHobbit = new Book('The Hobbit', 'J.R.R Tolkien', 295, 'true');
-let theLordOfTheRings = new Book(
-  'The Lord of the Rings',
-  'J.R.R Tolkien',
-  1000,
-  'false'
-);
-let mistborn = new Book('Mistborn', 'Sanderson', 400, 'false');
-
-myLibrary.push(theHobbit);
-myLibrary.push(theLordOfTheRings);
-myLibrary.push(mistborn);
+const preObject = document.getElementById('bookshelf');
+const dbRefObject = firebase.database().ref().child('bookshelf');
+let dbArray = [];
+let second = {};
+const getBooks = () => {
+  // const dbRefObject = await firebase.database().ref().child('bookshelf');
+  firebase
+    .database()
+    .ref()
+    .child('bookshelf')
+    .on('value', (book) => {
+      dbArray = [];
+      myLibrary = [];
+      dbArray.push(book.val());
+      second = Object.values(dbArray[0]);
+      second.forEach((element) => {
+        let newBooks = new Book(
+          element.title,
+          element.author,
+          element.pageCount,
+          element.read,
+          element.id
+        );
+        myLibrary.push(newBooks);
+      });
+      bookshelf.innerHTML = '';
+      addBookToLibrary();
+      deletes();
+      readUn();
+    });
+};
+getBooks();
 
 let bookshelf = document.querySelector('#bookshelf');
 let modal = document.getElementById('modal');
@@ -110,7 +131,6 @@ addToShelf.addEventListener('click', () => {
   readUn();
 });
 
-addBookToLibrary();
 let buttonArray = [];
 
 function deletes() {
@@ -126,13 +146,34 @@ function deletes() {
   }
 }
 
-deletes();
+// deletes();
 
 Book.prototype.readUnread = function () {
-  this.read = 'true';
   this.info = function () {
     return `<div>${this.title} by ${this.author}, ${this.pages} pages, read: ${this.read}</div>`;
   };
+  if (this.read === 'true') {
+    firebase
+      .database()
+      .ref()
+      .child('bookshelf')
+      .child(`Book${this.id}`)
+      .update({
+        read: 'false',
+      });
+  } else {
+    firebase
+      .database()
+      .ref()
+      .child('bookshelf')
+      .child(`Book${this.id}`)
+      .update({
+        read: 'true',
+      });
+  }
+
+  // console.log(firebase.database().ref().child('bookshelf').child('Book1'));
+  // console.log(second[this.id - 1].read);
 };
 
 let readArray = [];
@@ -150,4 +191,4 @@ function readUn() {
   }
 }
 
-readUn();
+// readUn();
