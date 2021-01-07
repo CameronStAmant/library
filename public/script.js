@@ -39,7 +39,6 @@ const dbRefObject = firebase.database().ref().child('bookshelf');
 let dbArray = [];
 let second = {};
 const getBooks = () => {
-  // const dbRefObject = await firebase.database().ref().child('bookshelf');
   firebase
     .database()
     .ref()
@@ -137,7 +136,12 @@ function deletes() {
   for (let a = 0; a < myLibrary.length; a++) {
     buttonArray[a] = document.getElementById(a);
     buttonArray[a].addEventListener('click', () => {
-      myLibrary.splice(a, 1);
+      firebase
+        .database()
+        .ref()
+        .child('bookshelf')
+        .child(`Book${second[a].id}`)
+        .remove();
       bookshelf.innerHTML = '';
       addBookToLibrary();
       deletes();
@@ -145,8 +149,6 @@ function deletes() {
     });
   }
 }
-
-// deletes();
 
 Book.prototype.readUnread = function () {
   this.info = function () {
@@ -171,9 +173,6 @@ Book.prototype.readUnread = function () {
         read: 'true',
       });
   }
-
-  // console.log(firebase.database().ref().child('bookshelf').child('Book1'));
-  // console.log(second[this.id - 1].read);
 };
 
 let readArray = [];
@@ -190,5 +189,3 @@ function readUn() {
     });
   }
 }
-
-// readUn();
