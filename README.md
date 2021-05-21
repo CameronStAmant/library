@@ -1,4 +1,18 @@
 # library
 
-This program allows you to view and add books to a collection. You can remove books from the collection as well as mark books as read.
-You can find it hosted on Firebase [here](https://library-ca4ad.web.app/).
+A library application to help keep track of your personal book collection.
+
+<p align="center">
+  <img src="./library.png">
+</p>
+
+## Features
+
+- Add and remove books from your library.
+- Mark books as read and unread.
+- Utilizes Firebase for the backend.
+- Includes form validation.
+
+## Demo
+
+- https://library-ca4ad.web.app/
